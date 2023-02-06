@@ -1,14 +1,35 @@
 from book import Copybook
-from person import Name
+from person import *
+
+import pickle
 
 
+def save(obj: Copybook, filename: str = 'book.bk') -> str:
+    with open(f'{filename}', 'ab') as file:
+        pickle.dump(obj, file)
 
-def search(data: Copybook):
-    value = input('ID or name: ').lower()
-    if value == 'id':
-        mm = int(input('Enter ID: '))
-        data.search(contact_id=(mm,))
-    elif value == 'name':
-        last_name = input('Enter last name: ')
-        second_name = input('Enter second name: ')
-        data.search(contact_name=(Name(last_name=last_name, second_name=second_name),))
+    return 'is correct!'
+
+
+def add(obj: Copybook, first_name: str, second_name: str, middle_name: str, home_mail: str = '', work_mail='',
+        home_phone='', work_phone='') -> str:
+    contact = Person(name=Name(first_name=first_name, second_name=second_name, middle_name=middle_name),
+                     mail=Mail(home=home_mail, work=work_mail),
+                     phone=Phone(home=home_phone, work=work_phone))
+    obj.add(contact)
+    return 'is correct'
+
+
+def delete(obj: Copybook, contact_id: int = None, contact_name: Name = None) -> str:
+    obj.delete(contact_id, contact_name)
+    return 'is correct'
+
+
+def search(obj: Copybook, contact_id: int = None, contact_name: Name = None) -> str:
+    obj.search(contact_id, contact_name)
+    return 'is correct'
+
+
+def list_book(obj: Copybook) -> str:
+    obj.list_book()
+    return 'is correct'
