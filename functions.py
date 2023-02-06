@@ -4,6 +4,22 @@ from person import *
 import pickle
 
 
+def greeting(option) -> str:
+    if option == 'create':
+        book = Copybook()
+    elif option == 'continue':
+        file = input('Enter file name: ')
+        load(file)
+    return 'is correct'
+
+
+def load(filename: str = 'book.bk') -> Copybook:
+    with open(f'{filename}', 'rb') as filename:
+        book = pickle.load(filename)
+
+    return book
+
+
 def save(obj: Copybook, filename: str = 'book.bk') -> str:
     with open(f'{filename}', 'ab') as file:
         pickle.dump(obj, file)
