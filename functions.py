@@ -29,11 +29,37 @@ def save(obj: Copybook, filename: str = 'book.bk') -> str:
     return 'is correct!'
 
 
-def add(obj: Copybook, first_name: str, second_name: str, middle_name: str, home_mail: str = '', work_mail='',
-        home_phone='', work_phone='') -> Person:
-    contact = Person(name=Name(first_name=first_name, second_name=second_name, middle_name=middle_name),
-                     mail=Mail(home=home_mail, work=work_mail),
-                     phone=Phone(home=home_phone, work=work_phone))
+def add(obj: Copybook) -> Person:
+    while True:
+        try:
+            first_name = input('Enter first name: ')
+            second_name = input('Enter second name: ')
+            middle_name = input('Enter middle name: ')
+            name = Name(first_name=first_name, second_name=second_name, middle_name=middle_name)
+            break
+        except Exception as error:
+            print(f"error: {error}")
+    while True:
+        try:
+            home_mail = input('Enter home mail, if you have: ')
+            work_mail = input('Enter work mail, if you have: ')
+            mail = Mail(home=home_mail, work=work_mail)
+            break
+        except Exception as error:
+            print(f"error: {error}")
+
+    while True:
+        try:
+            home_phone = input('Enter home phone, if you have: ')
+            work_phone = input('Enter work phone, if you have: ')
+            phone = Phone(home=home_phone, work=work_phone)
+            break
+        except Exception as error:
+            print(f"error: {error}")
+
+    contact = Person(name=name,
+                     mail=mail,
+                     phone=phone)
     obj.add(contact)
     return contact
 

@@ -18,22 +18,19 @@ class Mail(Contact):
 
     @pydantic.validator('home', 'work')
     def is_correct(cls, value):
-        if value != '':
-            if re.match(
-                    f'^((([0-9A-Za-z]{1}[-0-9A-z\.]{0, 30}[0-9A-Za-z]?)|([0-9А-Яа-я]{1}[-0-9А-я\.]{0, 30}[0-9А-Яа-я]?))@([-A-Za-z]{1,}\.){1,}[-A-Za-z]{2,})$',
-                    value):
-                print('Is not correct mail!')
-        return value
-
+        if re.fullmatch(re.compile(r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])"), value):
+            return value
+        else:
+            raise ValueError('Is not correct mail!')
 
 class Phone(Contact):
 
     @pydantic.validator('home', 'work')
     def is_correct(cls, value):
-        if value != '':
-            if re.match(f'/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10, 14}(\s*)?$/', value):
-                print('Is not correct phone!')
-        return value
+        if re.fullmatch(re.compile(r"\+?[1-9][0-9]{7,14}$"), value):
+            return value
+        else:
+            raise ValueError('Is not correct phone!')
 
 
 class Person(pydantic.BaseModel):
