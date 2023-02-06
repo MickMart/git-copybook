@@ -4,13 +4,15 @@ from person import *
 import pickle
 
 
-def greeting(option) -> str:
+def greeting(option) -> [Copybook, str]:
     if option == 'create':
         book = Copybook()
     elif option == 'continue':
         file = input('Enter file name: ')
-        load(file)
-    return 'is correct'
+        book = load(file)
+    else:
+        return 'not correct'
+    return book
 
 
 def load(filename: str = 'book.bk') -> Copybook:
@@ -28,12 +30,12 @@ def save(obj: Copybook, filename: str = 'book.bk') -> str:
 
 
 def add(obj: Copybook, first_name: str, second_name: str, middle_name: str, home_mail: str = '', work_mail='',
-        home_phone='', work_phone='') -> str:
+        home_phone='', work_phone='') -> Person:
     contact = Person(name=Name(first_name=first_name, second_name=second_name, middle_name=middle_name),
                      mail=Mail(home=home_mail, work=work_mail),
                      phone=Phone(home=home_phone, work=work_phone))
     obj.add(contact)
-    return 'is correct'
+    return contact
 
 
 def delete(obj: Copybook, contact_id: int = None, contact_name: Name = None) -> str:

@@ -37,3 +37,8 @@ class Copybook:
                         print(d)
         else:
             print('Enter ID or name!')
+
+    def list_book(self) -> None:
+        for contact in self.data:
+            for data in contact:
+                print(data)
