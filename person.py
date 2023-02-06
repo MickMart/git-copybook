@@ -6,6 +6,7 @@ import pydantic
 class Name(pydantic.BaseModel):
     last_name: str
     second_name: str
+    otechstvo: str
 
 
 class Contact(pydantic.BaseModel):
