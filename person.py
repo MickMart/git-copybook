@@ -18,10 +18,13 @@ class Mail(Contact):
 
     @pydantic.validator('home', 'work')
     def is_correct(cls, value):
-        if re.fullmatch(re.compile(r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])"), value):
+        if re.fullmatch(re.compile(
+                r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])"),
+                        value):
             return value
         else:
             raise ValueError('Is not correct mail!')
+
 
 class Phone(Contact):
 
