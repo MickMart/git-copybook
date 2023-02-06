@@ -1,47 +1,43 @@
-from person import *
-from book import *
+from book import Copybook
+import functions as func
 
-import pickle
 
-with open('data.pickle', 'rb') as f:
-    data = pickle.load(f)
+greeting = input('Enter create or continue: ')
+book = func.greeting(greeting)
 
-while True:
-    command = input('Enter command: ')
-
-    if command == 'exit':
-        with open('data.pickle', 'ab') as f:
-            pickle.dump(data, f)
-        break
-    elif command == 'add':
-        last_name = input('Enter last name: ')
-        second_name = input('Enter second name: ')
-        home_mail = input('Enter home mail : ')
-        work_mail = input('Enter work mail: ')
-        home_phone = input('Enter home phone: ')
-        work_phone = input('Enter work phone: ')
-        person = Person(name=Name(last_name=last_name, second_name=second_name),
-                        mail=Mail(home=home_mail, work=work_mail),
-                        phone=Phone(home=home_phone, work=work_phone))
-        data.add(person)
-        # for data in person:
-        #     print(data)
-        print(data.search)
-    elif command == 'delete':
-        value = input('ID or name: ').lower()
-        if value == 'id':
-            value = int(input('Enter ID: '))
-            data.delete(contact_id=value)
-        elif value == 'name':
-            value = input('Enter name: ')
-            data.delete(contact_name=value)
-    elif command == 'search':
-        value = input('ID or name: ').lower()
-        if value == 'id':
-            mm = int(input('Enter ID: '))
-            data.search(contact_id=(mm, ))
-        elif value == 'name':
-            last_name = input('Enter last name: ')
-            second_name = input('Enter second name: ')
-            data.search(contact_name=(Name(last_name=last_name, second_name=second_name),))
-
+if book != 'not correct':
+    while True:
+        try:
+            print('\ncommands {\nadd\ndelete\nsearch\nlist\n}\n')
+            com = input('Enter command: ')
+            if com == 'exit':
+                func.save(book)
+                break
+            elif com == 'add':
+                per = func.add(book)
+                for data in per:
+                    print(data)
+            elif com == 'delete':
+                option = input('ID or name: ').lower()
+                if option == 'id':
+                    value = int(input('Enter id: '))
+                    print(func.delete(contact_id=value))
+                elif option == 'name':
+                    value = input('Enter id: ')
+                    print(func.delete(contact_name=value))
+                else:
+                    print('Not correct')
+            elif com == 'search':
+                option = input('ID or name: ').lower()
+                if option == 'id':
+                    value = int(input('Enter id: '))
+                    print(func.search(contact_id=value))
+                elif option == 'name':
+                    value = input('Enter id: ')
+                    print(func.search(contact_name=value))
+                else:
+                    print('Not correct')
+            elif com == 'list':
+                func.list_book(book)
+        except KeyboardInterrupt:
+            func.save(book)
